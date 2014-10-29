@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Script-Type" content="text/javascript">
+    <title>Knockout JS Grid - Sample01</title>
+    <script type="text/javascript" src="Scripts/knockout-3.2.0.js"></script>
+    <script type="text/javascript" src="Scripts/knockout.simpleSortableGrid.1.0.js"></script>
+    <link href="Content/font-awesome.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div data-bind='simpleSortableGrid: gridViewModel'> </div>
+</body>
+</html>
+<script type="text/javascript">
+    var initialData = [
+        { name: "Well-Travelled Kitten", sales: 352, price: 75.95 },
+        { name: "Speedy Coyote", sales: 89, price: 190.00 },
+        { name: "Furious Lizard", sales: 152, price: 25.00 },
+        { name: "Indifferent Monkey", sales: 1, price: 99.95 },
+        { name: "Brooding Dragon", sales: 0, price: 6350 },
+        { name: "Ingenious Tadpole", sales: 39450, price: 0.35 },
+        { name: "Optimistic Snail", sales: 420, price: 1.50 }
+    ];
+    var PagedGridModel = function (items) {
+        this.items = ko.observableArray(items);
+        this.gridViewModel = new ko.simpleSortableGrid.viewModel({
+            data: this.items,
+            columns: [
+                { headerText: "Item Name", rowText: "name", isSortable: true },
+                { headerText: "Sales Count", rowText: "sales", isSortable: true },
+                { headerText: "Price", rowText: 'price', isSortable: true }
+            ],
+            pageSize: 5
+        });
+    };
+    ko.applyBindings(new PagedGridModel(initialData));
+</script>
