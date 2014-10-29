@@ -31,7 +31,10 @@
                 { headerText: "Sales Count", rowText: "sales", isSortable: true },
                 { headerText: "Price", rowText: 'price', isSortable: true }
             ],
-            pageSize: 5
+            pageSize: 5,
+            sortByClass: 'yourClassName',
+            sortByClassAse: 'yourClassNameAsc',
+            sortByClassDesc: 'yourClassNameDesc',
         });
     };
     ko.applyBindings(new PagedGridModel(initialData));
