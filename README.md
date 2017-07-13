@@ -18,7 +18,7 @@ Sample
             ],
             pageSize: 5,
             sortByClass: 'yourClassName',
-            sortByClassAse: 'yourClassNameAsc',
+            sortByClassAsc: 'yourClassNameAsc',
             sortByClassDesc: 'yourClassNameDesc',
         });
     };
