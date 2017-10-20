@@ -17,6 +17,7 @@ Sample
                 { headerText: "Price", rowText: 'price', isSortable: true }
             ],
             pageSize: 5,
+            cssTableClass: 'table table-striped table-hover',
             sortByClass: 'yourClassName',
             sortByClassAsc: 'yourClassNameAsc',
             sortByClassDesc: 'yourClassNameDesc',
@@ -24,5 +25,7 @@ Sample
     };
 
 Change the property **isSortable** to true to enable sorting.
+
+Setting **pageSize** to 0 disables pagination.
 
 Also if user want to change the default sort icon to be change. Update the **sortByClass, sortByClassAsc and sortByClassDesc** property values
