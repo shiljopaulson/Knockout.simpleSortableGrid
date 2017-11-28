@@ -22,12 +22,6 @@
             this.isGridPaginated = !(configuration.pageSize === 0);
 
             this.gridClass = configuration.gridClass || '';
-=======
-            /* pageSize of 0 means infinite pageSize, not paginated */
-            this.isGridPaginated = !(configuration.pageSize == 0);
-
-            this.cssTableClass = configuration.cssTableClass; 
->>>>>>> master:Scripts/knockout.simpleSortableGrid.1.0.js
             this.sortByClass = configuration.sortByClass || 'fa fa-sort';
             this.sortByClassAsc = configuration.sortByClassAsc || 'fa fa-caret-up';
             this.sortByClassDesc = configuration.sortByClassDesc || 'fa fa-caret-down';
@@ -45,14 +39,6 @@
                     return ko.unwrap(this.data).slice(startIndex, startIndex + this.pageSize);
                 }, this)
                 : this.data;
-=======
-            this.itemsOnCurrentPage = (this.isGridPaginated) ? 
-            		ko.computed(function () {
-		                var startIndex = this.pageSize * this.currentPageIndex();
-		                return ko.unwrap(this.data).slice(startIndex, startIndex + this.pageSize);
-            				}, this) 
-            		: this.data;
->>>>>>> master:Scripts/knockout.simpleSortableGrid.1.0.js
 
             this.maxPageIndex = ko.computed(function () {
                 return Math.ceil(ko.unwrap(this.data).length / this.pageSize) - 1;
@@ -104,9 +90,6 @@
 
     templateEngine.addTemplate("ko_simpleSortableGrid_grid", "\
                     <table data-bind=\"css:gridClass\">\
-=======
-                    <table cellspacing=\"0\" data-bind=\"css:cssTableClass\">\
->>>>>>> master:Scripts/knockout.simpleSortableGrid.1.0.js
                         <thead>\
                             <tr data-bind=\"foreach: columns\" style=\"cursor:pointer;\">\
                                 <!-- ko if: isSortable == true-->\
@@ -158,10 +141,6 @@
             if (viewModel.isGridPaginated) {
                 var pageLinksContainer = element.appendChild(document.createElement("DIV"));
                 ko.renderTemplate(pageLinksTemplateName, viewModel, { templateEngine: templateEngine }, pageLinksContainer, "replaceNode");
-=======
-            	var pageLinksContainer = element.appendChild(document.createElement("DIV"));
-            	ko.renderTemplate(pageLinksTemplateName, viewModel, { templateEngine: templateEngine }, pageLinksContainer, "replaceNode");
->>>>>>> master:Scripts/knockout.simpleSortableGrid.1.0.js
             }
         }
     };
