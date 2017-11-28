@@ -16,13 +16,15 @@ Sample
                 { headerText: "Sales Count", rowText: "sales", isSortable: true },
                 { headerText: "Price", rowText: 'price', isSortable: true }
             ],
-            pageSize: 5,
+            pageSize: 5, /* pageSize of 0 means infinite pageSize, not paginated */
+			gridClass: 'yourClassName',
             sortByClass: 'yourClassName',
             sortByClassAsc: 'yourClassNameAsc',
             sortByClassDesc: 'yourClassNameDesc',
+			paginationClass: 'yourClassName'
         });
     };
 
 Change the property **isSortable** to true to enable sorting.
 
-Also if user want to change the default sort icon to be change. Update the **sortByClass, sortByClassAsc and sortByClassDesc** property values
+Also if user want to change the default sort icon to be change. Update the **gridClass, sortByClass, sortByClassAsc, sortByClassDesc and paginationClass** property values

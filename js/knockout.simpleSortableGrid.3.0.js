@@ -19,9 +19,13 @@
             this.data = configuration.data;
             this.currentPageIndex = ko.observable(0);
             this.pageSize = configuration.pageSize || 5;
+            this.isGridPaginated = !(configuration.pageSize === 0);
+
+            this.gridClass = configuration.gridClass || '';
             this.sortByClass = configuration.sortByClass || 'fa fa-sort';
             this.sortByClassAsc = configuration.sortByClassAsc || 'fa fa-caret-up';
             this.sortByClassDesc = configuration.sortByClassDesc || 'fa fa-caret-down';
+            this.paginationClass = configuration.paginationClass || '';
 
             this.lastSortedColumn = ko.observable('');
             this.lastSort = ko.observable('Desc');
@@ -29,10 +33,12 @@
             // If you don't specify columns configuration, we'll use scaffolding
             this.columns = configuration.columns || getColumnsForScaffolding(ko.unwrap(this.data));
 
-            this.itemsOnCurrentPage = ko.computed(function () {
-                var startIndex = this.pageSize * this.currentPageIndex();
-                return ko.unwrap(this.data).slice(startIndex, startIndex + this.pageSize);
-            }, this);
+            this.itemsOnCurrentPage = (this.isGridPaginated) ?
+                ko.computed(function () {
+                    var startIndex = this.pageSize * this.currentPageIndex();
+                    return ko.unwrap(this.data).slice(startIndex, startIndex + this.pageSize);
+                }, this)
+                : this.data;
 
             this.maxPageIndex = ko.computed(function () {
                 return Math.ceil(ko.unwrap(this.data).length / this.pageSize) - 1;
@@ -52,16 +58,19 @@
                 }
                 self.currentPageIndex(0);
             };
+
             this.sortByAsc = function (columnName) {
                 self.data.sort(function (a, b) {
                     return a[columnName] < b[columnName] ? -1 : 1;
                 });
             };
+
             this.sortByDesc = function (columnName) {
                 self.data.reverse(function (a, b) {
                     return a[columnName] < b[columnName] ? -1 : 1;
                 });
             };
+
             this.sortByCSS = function (columnName) {
                 if (columnName != undefined && columnName != '') {
                     return self.lastSortedColumn() == columnName ? (self.lastSort() == 'Asc' ? self.sortByClassAsc : self.sortByClassDesc) : self.sortByClass;
@@ -80,7 +89,7 @@
     };
 
     templateEngine.addTemplate("ko_simpleSortableGrid_grid", "\
-                    <table cellspacing=\"0\">\
+                    <table data-bind=\"css:gridClass\">\
                         <thead>\
                             <tr data-bind=\"foreach: columns\" style=\"cursor:pointer;\">\
                                 <!-- ko if: isSortable == true-->\
@@ -97,9 +106,10 @@
                             </tr>\
                         </tbody>\
                     </table>");
+
     templateEngine.addTemplate("ko_simpleSortableGrid_pageLinks", "\
-                    <div>\
-                        <span>Page:</span>\
+                    <div data-bind=\"css:paginationClass\">\
+						Pages: \
                         <!-- ko foreach: ko.utils.range(0, maxPageIndex) -->\
                                <a href=\"#\" data-bind=\"text: $data + 1, click: function() { $root.currentPageIndex($data) }, css: { selected: $data == $root.currentPageIndex() }\">\
                             </a>\
@@ -128,8 +138,10 @@
             ko.renderTemplate(gridTemplateName, viewModel, { templateEngine: templateEngine }, gridContainer, "replaceNode");
 
             // Render the page links
-            var pageLinksContainer = element.appendChild(document.createElement("DIV"));
-            ko.renderTemplate(pageLinksTemplateName, viewModel, { templateEngine: templateEngine }, pageLinksContainer, "replaceNode");
+            if (viewModel.isGridPaginated) {
+                var pageLinksContainer = element.appendChild(document.createElement("DIV"));
+                ko.renderTemplate(pageLinksTemplateName, viewModel, { templateEngine: templateEngine }, pageLinksContainer, "replaceNode");
+            }
         }
     };
 })();
