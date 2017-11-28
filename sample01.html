@@ -1,19 +1,23 @@
 ﻿<!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="Content-Script-Type" content="text/javascript">
     <title>Knockout JS Grid - Sample01</title>
-    <script type="text/javascript" src="Scripts/knockout-3.2.0.js"></script>
-    <script type="text/javascript" src="Scripts/knockout.simpleSortableGrid.1.0.js"></script>
-    <link href="Content/font-awesome.min.css" rel="stylesheet" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
+    <script type="text/javascript" src="js/knockout.simpleSortableGrid.3.0.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
 </head>
+
 <body>
     <div data-bind='simpleSortableGrid: gridViewModel'> </div>
 </body>
+
 </html>
 <script type="text/javascript">
-    var initialData = [
+    var sampleData = [
         { name: "Well-Travelled Kitten", sales: 352, price: 75.95 },
         { name: "Speedy Coyote", sales: 89, price: 190.00 },
         { name: "Furious Lizard", sales: 152, price: 25.00 },
@@ -22,6 +26,7 @@
         { name: "Ingenious Tadpole", sales: 39450, price: 0.35 },
         { name: "Optimistic Snail", sales: 420, price: 1.50 }
     ];
+
     var PagedGridModel = function (items) {
         this.items = ko.observableArray(items);
         this.gridViewModel = new ko.simpleSortableGrid.viewModel({
@@ -31,8 +36,13 @@
                 { headerText: "Sales Count", rowText: "sales", isSortable: true },
                 { headerText: "Price", rowText: 'price', isSortable: true }
             ],
-            pageSize: 5
+            pageSize: 3,/* pageSize of 0 means infinite pageSize, not paginated */
+            gridClass: 'table table-striped table-hover',
+            sortByClass: 'fa fa-sort',
+            sortByClassAsc: 'fa fa-caret-up',
+            sortByClassDesc: 'fa fa-caret-down',
+            paginationClass: 'breadcrumb'
         });
     };
-    ko.applyBindings(new PagedGridModel(initialData));
+    ko.applyBindings(new PagedGridModel(sampleData));
 </script>

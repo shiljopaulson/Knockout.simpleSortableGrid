@@ -16,16 +16,24 @@ Sample
                 { headerText: "Sales Count", rowText: "sales", isSortable: true },
                 { headerText: "Price", rowText: 'price', isSortable: true }
             ],
+<<<<<<< HEAD
+            pageSize: 5, /* pageSize of 0 means infinite pageSize, not paginated */
+			gridClass: 'yourClassName',
+=======
             pageSize: 5,
-            cssTableClass: 'table table-striped table-hover',
+>>>>>>> master
             sortByClass: 'yourClassName',
             sortByClassAsc: 'yourClassNameAsc',
             sortByClassDesc: 'yourClassNameDesc',
+			paginationClass: 'yourClassName'
         });
     };
 
 Change the property **isSortable** to true to enable sorting.
 
+<<<<<<< HEAD
+=======
 Setting **pageSize** to 0 disables pagination.
 
 Also if user want to change the default sort icon to be change. Update the **sortByClass, sortByClassAsc and sortByClassDesc** property values
+>>>>>>> master
