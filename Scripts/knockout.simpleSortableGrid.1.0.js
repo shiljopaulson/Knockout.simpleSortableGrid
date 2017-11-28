@@ -19,6 +19,10 @@
             this.data = configuration.data;
             this.currentPageIndex = ko.observable(0);
             this.pageSize = configuration.pageSize || 5;
+            /* pageSize of 0 means infinite pageSize, not paginated */
+            this.isGridPaginated = !(configuration.pageSize == 0);
+
+            this.cssTableClass = configuration.cssTableClass; 
             this.sortByClass = configuration.sortByClass || 'fa fa-sort';
             this.sortByClassAsc = configuration.sortByClassAsc || 'fa fa-caret-up';
             this.sortByClassDesc = configuration.sortByClassDesc || 'fa fa-caret-down';
@@ -29,10 +33,12 @@
             // If you don't specify columns configuration, we'll use scaffolding
             this.columns = configuration.columns || getColumnsForScaffolding(ko.unwrap(this.data));
 
-            this.itemsOnCurrentPage = ko.computed(function () {
-                var startIndex = this.pageSize * this.currentPageIndex();
-                return ko.unwrap(this.data).slice(startIndex, startIndex + this.pageSize);
-            }, this);
+            this.itemsOnCurrentPage = (this.isGridPaginated) ? 
+            		ko.computed(function () {
+		                var startIndex = this.pageSize * this.currentPageIndex();
+		                return ko.unwrap(this.data).slice(startIndex, startIndex + this.pageSize);
+            				}, this) 
+            		: this.data;
 
             this.maxPageIndex = ko.computed(function () {
                 return Math.ceil(ko.unwrap(this.data).length / this.pageSize) - 1;
@@ -80,7 +86,7 @@
     };
 
     templateEngine.addTemplate("ko_simpleSortableGrid_grid", "\
-                    <table cellspacing=\"0\">\
+                    <table cellspacing=\"0\" data-bind=\"css:cssTableClass\">\
                         <thead>\
                             <tr data-bind=\"foreach: columns\" style=\"cursor:pointer;\">\
                                 <!-- ko if: isSortable == true-->\
@@ -128,8 +134,10 @@
             ko.renderTemplate(gridTemplateName, viewModel, { templateEngine: templateEngine }, gridContainer, "replaceNode");
 
             // Render the page links
-            var pageLinksContainer = element.appendChild(document.createElement("DIV"));
-            ko.renderTemplate(pageLinksTemplateName, viewModel, { templateEngine: templateEngine }, pageLinksContainer, "replaceNode");
+            if (viewModel.isGridPaginated) {
+            	var pageLinksContainer = element.appendChild(document.createElement("DIV"));
+            	ko.renderTemplate(pageLinksTemplateName, viewModel, { templateEngine: templateEngine }, pageLinksContainer, "replaceNode");
+            }
         }
     };
 })();
