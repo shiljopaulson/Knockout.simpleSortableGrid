@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Script-Type" content="text/javascript">
+    <title>Knockout JS Grid - Sample01</title>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
+    <script type="text/javascript" src="js/knockout.simpleSortableGrid.3.0.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div data-bind='simpleSortableGrid: gridViewModel'> </div>
+</body>
+
+</html>
+<script type="text/javascript">
+    var sampleData = [
+        { name: "Well-Travelled Kitten", sales: 352, price: 75.95 },
+        { name: "Speedy Coyote", sales: 89, price: 190.00 },
+        { name: "Furious Lizard", sales: 152, price: 25.00 },
+        { name: "Indifferent Monkey", sales: 1, price: 99.95 },
+        { name: "Brooding Dragon", sales: 0, price: 6350 },
+        { name: "Ingenious Tadpole", sales: 39450, price: 0.35 },
+        { name: "Optimistic Snail", sales: 420, price: 1.50 }
+    ];
+
+    var PagedGridModel = function (items) {
+        this.items = ko.observableArray(items);
+        this.gridViewModel = new ko.simpleSortableGrid.viewModel({
+            data: this.items,
+            columns: ko.observableArray([
+                { headerText: ko.observable("Item Name"), rowText: "name", isSortable: true },
+                { headerText: ko.observable("Sales Count"), rowText: "sales", isSortable: true },
+                { headerText: ko.observable("Price"), rowText: 'price', isSortable: true }
+            ]),
+            pageSize: 3,/* pageSize of 0 means infinite pageSize, not paginated */
+            gridClass: 'table table-striped table-hover',
+            sortByClass: 'fa fa-sort',
+            sortByClassAsc: 'fa fa-caret-up',
+            sortByClassDesc: 'fa fa-caret-down',
+            paginationClass: 'breadcrumb'
+        });
+    };
+    var instance = new PagedGridModel(sampleData)
+    ko.applyBindings(instance);
+
+    instance.gridViewModel.columns()[0].headerText('New Item Name');
+</script>
