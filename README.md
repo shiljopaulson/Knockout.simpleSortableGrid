@@ -40,6 +40,6 @@ Example
 
 Change the property **isSortable** to true to enable sorting for a specific column/field.
 
-Also if user want to change the default sort icon to be change. Update the **gridClass, sortByClass, sortByClassAsc, sortByClassDesc and paginationClass** property values. Please have a look at the [sample](https://github.com/shiljopaulson/Knockout.simpleSortableGrid/blob/master/sample01.html)
+Also if user want to change the default sort icon to be change. Update the **gridClass, sortByClass, sortByClassAsc, sortByClassDesc and paginationClass** property values. Please have a look at the [sample](sample01.html)
 
 Please find the minified version at link [Knockout.SimpleSortableGrid.3.0.min.js](https://github.com/shiljopaulson/Knockout.simpleSortableGrid/blob/master/js/knockout.simpleSortableGrid.3.0.min.js)
